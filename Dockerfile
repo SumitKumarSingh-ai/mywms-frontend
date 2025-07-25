@@ -1,16 +1,18 @@
-# Use a Node.js runtime as the base image
+# frontend/Dockerfile
+
 FROM node:20-slim
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Ensure clean install
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the app's source code
+# Copy source code
 COPY . .
 
-# The command to run the app is specified in docker-compose.yml
+# Expose Vite port
+EXPOSE 5173
+
+# Run the dev server with host binding
+CMD ["npm", "run", "dev", "--", "--host"]
